@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Song For You</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    .font-cursive {
+      font-family: 'Dancing Script', cursive;
+    }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 1.5s ease-out forwards;
+    }
+
+    @keyframes heartbeat-bg {
+      0% { background-size: 100% 100%; }
+      50% { background-size: 105% 105%; }
+      100% { background-size: 100% 100%; }
+    }
+    .animate-heartbeat-bg {
+      background-position: center;
+      animation: heartbeat-bg 2.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat-icon {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .animate-heartbeat-icon {
+      animation: heartbeat-icon 1.5s ease-in-out infinite;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-rose-50">
+
+  <main id="main-container" class="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-rose-50 via-red-100 to-rose-100 p-4 sm:p-6 lg:p-8 overflow-hidden transition-all duration-1000">
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="text-center animate-fade-in">
+       <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700/90 mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.1)">
+          For Gloria
+        </h1>
+        <p class="text-red-800/70 mb-8 text-lg">Press begin when you're ready.</p>
+        <button id="begin-button" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-500 rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-rose-50 transform hover:scale-105">
+          <svg class="w-6 h-6 mr-3 transition-transform duration-300 group-hover:scale-125" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+          Begin
+        </button>
+    </div>
+
+    <!-- Lyrics Screen -->
+    <div id="lyrics-screen" class="hidden w-full max-w-4xl text-center flex-col items-center">
+      <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700/90 mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.1)">
+        For You
+      </h1>
+      <svg class="w-8 h-8 text-red-400 mb-8 animate-heartbeat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+
+      <div class="w-full bg-white/60 backdrop-blur-sm shadow-xl rounded-2xl p-6 md:p-10 border border-white/50">
+        <pre id="lyrics-container" class="font-cursive text-3xl md:text-4xl lg:text-5xl text-red-900/90 whitespace-pre-wrap text-center transition-all duration-500 h-80 overflow-y-auto p-4 scrollbar-hide" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.1)"></pre>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mainContainer = document.getElementById('main-container');
+      const startScreen = document.getElementById('start-screen');
+      const lyricsScreen = document.getElementById('lyrics-screen');
+      const beginButton = document.getElementById('begin-button');
+      const lyricsContainer = document.getElementById('lyrics-container');
+
+      const songLyrics = [
+        "Spent 24 hours, I need more hours with you", "You spent the weekend getting even, ooh ooh", "We spent the late nights making things right between us",
+        "But now it's all good, babe", "Roll that back wood, babe", "And play me close", "'Cause girls like you run 'round with guys like me",
+        "'Til sun down when I come through", "I need a girl like you, yeah yeah", "Girls like you love fun, and yeah, me too",
+        "What I want when I come through", "I need a girl like you, yeah yeah", "", "Maybe it's 6:45", "Maybe I'm barely alive",
+        "Maybe you've taken my shit for the last time, yeah", "Maybe I know that I'm drunk", "Maybe I know you're the one",
+        "Maybe I'm thinking it's better if you drive", "", "'Cause girls like you run 'round with guys like me",
+        "'Til sun down when I come through", "I need a girl like you, yeah yeah", "Girls like you love fun, and yeah, me too",
+        "What I want when I come through", "I need a girl like you, yeah yeah", "", "I need a girl like you...", "", "So...", "Will you be my girlfriend?"
+      ];
+
+      const lineDelays = [
+        700, 700, 900, 500, 500, 800, 600, 600, 1200, 600, 600, 1500, 800, 500, 500, 900, 500, 500, 1200, 800,
+        600, 600, 1200, 600, 600, 2000, 1000, 2500, 2000, 3000, 1000,
+      ];
+
+      const typingSpeed = 70;
+      const audioSrc = "./song.mp3";
+      const audio = new Audio(audioSrc);
+      audio.loop = true;
+
+      const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+      const typeLyrics = async () => {
+        const cursor = document.createElement('span');
+        cursor.className = 'animate-pulse';
+        cursor.textContent = '|';
+        lyricsContainer.appendChild(cursor);
+
+        await sleep(1000);
+
+        for (let i = 0; i < songLyrics.length; i++) {
+          const line = songLyrics[i];
+          for (const char of line) {
+            cursor.before(char);
+            lyricsContainer.scrollTop = lyricsContainer.scrollHeight;
+            await sleep(typingSpeed);
+          }
+
+          if (i < songLyrics.length - 1) {
+             cursor.before('\n');
+          }
+          
+          await sleep(lineDelays[i]);
+        }
+        cursor.remove();
+      };
+
+      beginButton.addEventListener('click', () => {
+        startScreen.classList.add('hidden');
+        lyricsScreen.classList.remove('hidden');
+        lyricsScreen.classList.add('animate-fade-in', 'flex');
+        mainContainer.classList.add('animate-heartbeat-bg');
+        
+        audio.play().catch(error => console.error("Audio playback failed:", error));
+
+        typeLyrics();
+      });
+    });
+  </script>
+</body>
+</html>
