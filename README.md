@@ -1,2 +1,2 @@
 # Love_notes
-For the couples. Tere are levels to these shit.
+For the couples. There are levels to these shit.
