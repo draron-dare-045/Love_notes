@@ -2,79 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Song For You</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
+    * { -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
     .font-cursive {
       font-family: 'Dancing Script', cursive;
     }
-    
+
+    .romance-bg {
+      background: radial-gradient(circle at 20% 20%, #fff1f2 0%, transparent 45%),
+                  radial-gradient(circle at 80% 0%, #ffe4e6 0%, transparent 40%),
+                  linear-gradient(135deg, #fff5f5 0%, #ffe8ec 45%, #fecdd3 100%);
+      background-size: 200% 200%;
+      animation: bg-drift 18s ease-in-out infinite;
+    }
+    @keyframes bg-drift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -10%;
+      color: rgba(225, 29, 72, 0.18);
+      animation: float-up linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+    @keyframes float-up {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-115vh) translateX(var(--drift, 20px)) rotate(20deg); opacity: 0; }
+    }
+
     @keyframes fade-in {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in {
-      animation: fade-in 1.5s ease-out forwards;
+      animation: fade-in 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    @keyframes heartbeat-bg {
-      0% { background-size: 100% 100%; }
-      50% { background-size: 105% 105%; }
-      100% { background-size: 100% 100%; }
+    @keyframes fade-in-scale {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .animate-heartbeat-bg {
-      background-position: center;
-      animation: heartbeat-bg 2.5s ease-in-out infinite;
+    .animate-fade-in-scale {
+      animation: fade-in-scale 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     @keyframes heartbeat-icon {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
+      50% { transform: scale(1.18); }
     }
     .animate-heartbeat-icon {
-      animation: heartbeat-icon 1.5s ease-in-out infinite;
+      animation: heartbeat-icon 1.4s ease-in-out infinite;
     }
 
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.35), 0 10px 40px -10px rgba(225,29,72,0.4); }
+      50% { box-shadow: 0 0 0 14px rgba(225, 29, 72, 0), 0 10px 40px -10px rgba(225,29,72,0.4); }
     }
-    .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+    .glow-pulse {
+      animation: glow-pulse 2.6s ease-in-out infinite;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor-blink { animation: blink 0.9s step-end infinite; }
+
+    .lyric-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.75), rgba(255,255,255,0.5));
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.6);
     }
   </style>
 </head>
-<body class="bg-rose-50">
+<body class="romance-bg">
 
-  <main id="main-container" class="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-rose-50 via-red-100 to-rose-100 p-4 sm:p-6 lg:p-8 overflow-hidden transition-all duration-1000">
+  <main id="main-container" class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8">
 
-    <!-- Start Screen -->
-    <div id="start-screen" class="text-center animate-fade-in">
-       <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700/90 mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.1)">
-          From Your Boyfriend
-        </h1>
-        <h4 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700/90 mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.1)">
-          HAPPY BIRTHDAY NAOMI
-        </h2>
-        <button id="begin-button" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-500 rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-rose-50 transform hover:scale-105">
-          <svg class="w-6 h-6 mr-3 transition-transform duration-300 group-hover:scale-125" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-          Begin
-        </button>
+    <div id="hearts-bg" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <div id="start-screen" class="relative z-10 text-center animate-fade-in-scale px-4">
+      <svg class="w-10 h-10 mx-auto text-rose-400 mb-3 animate-heartbeat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+
+      <p class="uppercase tracking-[0.35em] text-rose-400/80 text-xs sm:text-sm mb-3">From Your Boyfriend</p>
+      <h1 class="font-cursive text-6xl sm:text-7xl md:text-8xl text-red-700 mb-2 leading-tight" style="text-shadow: 2px 2px 12px rgba(190,18,60,0.15)">
+        Happy Birthday
+      </h1>
+      <h1 class="font-cursive text-6xl sm:text-7xl md:text-8xl text-red-700 mb-8 leading-tight" style="text-shadow: 2px 2px 12px rgba(190,18,60,0.15)">
+        Naomi
+      </h1>
+
+      <button id="begin-button" class="glow-pulse group relative inline-flex items-center justify-center px-9 py-4 text-lg font-semibold text-white bg-gradient-to-r from-rose-500 to-red-500 rounded-full shadow-lg transition-all duration-300 ease-in-out hover:from-rose-600 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-rose-50 transform hover:scale-105">
+        <svg class="w-5 h-5 mr-3 transition-transform duration-300 group-hover:scale-125" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+        Begin
+      </button>
     </div>
 
-    <!-- Lyrics Screen -->
-    <div id="lyrics-screen" class="hidden w-full max-w-4xl text-center flex-col items-center">
-      <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700/90 mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.1)">
-        FOR NAOMI
+    <div id="lyrics-screen" class="hidden relative z-10 w-full max-w-3xl text-center flex-col items-center px-2">
+      <p class="uppercase tracking-[0.35em] text-rose-400/80 text-xs sm:text-sm mb-2">A Word for</p>
+      <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700 mb-5" style="text-shadow: 2px 2px 10px rgba(190,18,60,0.15)">
+        Naomi
       </h1>
-      <svg class="w-8 h-8 text-red-400 mb-8 animate-heartbeat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+      <svg class="w-7 h-7 text-red-400 mb-6 animate-heartbeat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
 
-      <div class="w-full bg-white/60 backdrop-blur-sm shadow-xl rounded-2xl p-6 md:p-10 border border-white/50">
-        <pre id="lyrics-container" class="font-cursive text-3xl md:text-4xl lg:text-5xl text-red-900/90 whitespace-pre-wrap text-center transition-all duration-500 h-80 overflow-y-auto p-4 scrollbar-hide" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.1)"></pre>
+      <div class="w-full lyric-card shadow-xl rounded-3xl p-6 md:p-10">
+        <pre id="lyrics-container" class="font-cursive text-2xl sm:text-3xl md:text-4xl text-red-900/90 whitespace-pre-wrap text-center h-72 md:h-80 overflow-y-auto p-2 scrollbar-hide" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.08)"></pre>
       </div>
+    </div>
+
+    <div id="ending-screen" class="hidden relative z-10 text-center animate-fade-in px-4">
+      <svg class="w-10 h-10 mx-auto text-rose-400 mb-4 animate-heartbeat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+      <h1 class="font-cursive text-5xl sm:text-6xl md:text-7xl text-red-700 mb-4" style="text-shadow: 2px 2px 10px rgba(190,18,60,0.15)">
+        Forever Yours
+      </h1>
+      <p class="text-red-800/80 text-lg sm:text-xl mb-8 max-w-md mx-auto">
+        Happy Birthday, my love. Every word of that song is true.
+      </p>
+      <button id="replay-button" class="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-red-700 bg-white/70 border border-red-200 rounded-full shadow-md transition-all duration-300 ease-in-out hover:bg-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300">
+        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+        Play Again
+      </button>
     </div>
   </main>
 
@@ -83,8 +149,11 @@
       const mainContainer = document.getElementById('main-container');
       const startScreen = document.getElementById('start-screen');
       const lyricsScreen = document.getElementById('lyrics-screen');
+      const endingScreen = document.getElementById('ending-screen');
       const beginButton = document.getElementById('begin-button');
+      const replayButton = document.getElementById('replay-button');
       const lyricsContainer = document.getElementById('lyrics-container');
+      const heartsBg = document.getElementById('hearts-bg');
 
       const songLyrics = [
         "MY SOULMATE,MY LIGHT\n",
@@ -120,13 +189,30 @@
       const typingSpeed = 70;
       const audioSrc = "./song.mp3";
       const audio = new Audio(audioSrc);
-      audio.loop = true;
+      audio.loop = false;
 
       const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+      const heartSymbols = ['♥', '♡'];
+      const spawnHeart = () => {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart';
+        heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        const size = 14 + Math.random() * 22;
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = size + 'px';
+        heart.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+        const duration = 10 + Math.random() * 10;
+        heart.style.animationDuration = duration + 's';
+        heartsBg.appendChild(heart);
+        setTimeout(() => heart.remove(), duration * 1000);
+      };
+      for (let i = 0; i < 6; i++) setTimeout(spawnHeart, i * 900);
+      setInterval(spawnHeart, 1600);
+
       const typeLyrics = async () => {
         const cursor = document.createElement('span');
-        cursor.className = 'animate-pulse';
+        cursor.className = 'cursor-blink';
         cursor.textContent = '|';
         lyricsContainer.appendChild(cursor);
 
@@ -143,22 +229,38 @@
           if (i < songLyrics.length - 1) {
              cursor.before('\n');
           }
-          
+
           await sleep(lineDelays[i]);
         }
         cursor.remove();
       };
 
-      beginButton.addEventListener('click', () => {
+      const showEndingWhenDone = () => {
+        audio.addEventListener('ended', () => {
+          lyricsScreen.classList.add('hidden');
+          lyricsScreen.classList.remove('flex');
+          endingScreen.classList.remove('hidden');
+          endingScreen.classList.add('flex', 'flex-col', 'items-center');
+        }, { once: true });
+      };
+
+      const startExperience = () => {
         startScreen.classList.add('hidden');
+        endingScreen.classList.add('hidden');
+        endingScreen.classList.remove('flex', 'flex-col', 'items-center');
         lyricsScreen.classList.remove('hidden');
-        lyricsScreen.classList.add('animate-fade-in', 'flex');
-        mainContainer.classList.add('animate-heartbeat-bg');
-        
+        lyricsScreen.classList.add('animate-fade-in', 'flex', 'flex-col');
+        lyricsContainer.textContent = '';
+
+        audio.currentTime = 0;
         audio.play().catch(error => console.error("Audio playback failed:", error));
+        showEndingWhenDone();
 
         typeLyrics();
-      });
+      };
+
+      beginButton.addEventListener('click', startExperience);
+      replayButton.addEventListener('click', startExperience);
     });
   </script>
 </body>
